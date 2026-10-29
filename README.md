@@ -12,6 +12,10 @@ Requirements: Node.js 22.12 or newer and npm. Run `npm install`, then `npm run d
 
 The database is created and migrated on first launch. In Settings, users can export an encrypted full-profile backup or restore one after validation and confirmation. The live database must stay in the app-data folder; a user may choose a OneDrive or other synced folder for backup files only.
 
+## Local profiles
+
+BodyComp is offline-first. Each local profile has an independent SQLite database under Electron's per-Windows-user application-data directory. Select or create a profile on launch; no online account or environment configuration is required.
+
 ## Release
 
 The current Windows Store and direct-build procedures, release gates, and privacy notes are in [STORE_DEPLOYMENT.md](STORE_DEPLOYMENT.md). The Forge MSIX maker is currently experimental; validate each toolchain update and package on a clean Windows install before submission. Store publisher identity, signing credentials, listing assets, and certification are not configured in this repository.

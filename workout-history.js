@@ -156,7 +156,7 @@
     workouts.forEach((workout) => {
       const card = document.createElement("article");
       card.className = "exercise-card history-card";
-      card.innerHTML = `<header class="exercise-card-header"><div><h3>${formatDate(workout.startedAt)}</h3><p>${workout.exercises.length} exercise${workout.exercises.length === 1 ? "" : "s"}</p></div><button class="button save-history" type="button">Save changes</button><button class="button button-secondary delete-history" type="button">Delete</button></header><div class="history-session-fields"></div><label class="notes-field">Workout notes<textarea class="history-notes" maxlength="2000" placeholder="Optional notes"></textarea></label><div class="history-exercises"></div><div class="history-actions"><div class="history-add-exercise"><select class="add-exercise-picker" aria-label="Choose an exercise to add"></select><button class="button button-secondary add-history-exercise" type="button">Add exercise</button></div><p class="form-status history-status" role="status"></p></div>`;
+      card.innerHTML = `<header class="exercise-card-header"><div><h3>${formatDate(workout.startedAt)}</h3><p>${workout.exercises.length} exercise${workout.exercises.length === 1 ? "" : "s"}</p></div><button class="button save-history" type="button">Save all changes</button><button class="button button-secondary delete-history" type="button">Delete</button></header><div class="history-session-fields"></div><div class="timestamp-actions"><button class="button button-secondary save-timestamp" type="button">Save date &amp; time</button><button class="text-button cancel-timestamp" type="button">Cancel date &amp; time</button></div><label class="notes-field">Workout notes<textarea class="history-notes" maxlength="2000" placeholder="Optional notes"></textarea></label><div class="history-exercises"></div><div class="history-actions"><div class="history-add-exercise"><select class="add-exercise-picker" aria-label="Choose an exercise to add"></select><button class="button button-secondary add-history-exercise" type="button">Add exercise</button></div><p class="form-status history-status" role="status"></p></div>`;
       const sessionFields = card.querySelector(".history-session-fields");
       const startedField = makeField(
         "Started",
@@ -176,6 +176,7 @@
         workout.finishedAt = event.target.value || null;
       });
       sessionFields.append(startedField.label, finishedField.label);
+      const originalTimestamp = { startedAt: workout.startedAt, finishedAt: workout.finishedAt };
 
       const notes = card.querySelector(".history-notes");
       notes.value = workout.notes || "";
@@ -295,6 +296,42 @@
       });
 
       const cardStatus = card.querySelector(".history-status");
+      card.querySelector(".cancel-timestamp").addEventListener("click", () => {
+        workout.startedAt = originalTimestamp.startedAt;
+        workout.finishedAt = originalTimestamp.finishedAt;
+        startedField.input.value = dateTimeInput(workout.startedAt);
+        finishedField.input.value = dateTimeInput(workout.finishedAt);
+        cardStatus.textContent = "Date and time changes discarded.";
+        cardStatus.className = "form-status history-status";
+      });
+      card.querySelector(".save-timestamp").addEventListener("click", async () => {
+        const startedAt = new Date(workout.startedAt);
+        const finishedAt = workout.finishedAt ? new Date(workout.finishedAt) : null;
+        if (Number.isNaN(startedAt.getTime()) || (finishedAt && (Number.isNaN(finishedAt.getTime()) || finishedAt < startedAt))) {
+          cardStatus.textContent = "Enter a valid date and time. Finish cannot be before start.";
+          cardStatus.className = "form-status history-status error";
+          return;
+        }
+        const button = card.querySelector(".save-timestamp");
+        button.disabled = true;
+        cardStatus.textContent = "Saving date and time…";
+        cardStatus.className = "form-status history-status";
+        try {
+          const saved = await window.MuscleRecoveryApi.updateWorkoutTimestamp(workout.id, { startedAt: startedAt.toISOString(), finishedAt: finishedAt?.toISOString() || null });
+          workout.startedAt = saved.startedAt;
+          workout.finishedAt = saved.finishedAt;
+          originalTimestamp.startedAt = saved.startedAt;
+          originalTimestamp.finishedAt = saved.finishedAt;
+          startedField.input.value = dateTimeInput(saved.startedAt);
+          finishedField.input.value = dateTimeInput(saved.finishedAt);
+          card.querySelector("h3").textContent = formatDate(saved.startedAt);
+          cardStatus.textContent = "Workout date and time updated. Recovery has been recalculated.";
+          cardStatus.className = "form-status history-status success";
+        } catch (error) {
+          cardStatus.textContent = error.message || "Unable to update date and time.";
+          cardStatus.className = "form-status history-status error";
+        } finally { button.disabled = false; }
+      });
       const exercisePicker = card.querySelector(".add-exercise-picker");
       const placeholder = document.createElement("option");
       placeholder.value = "";

@@ -10,6 +10,7 @@ const {
 } = require("../electron/database");
 const { decodeBackup, encodeBackup } = require("../electron/backup");
 const { createService } = require("../electron/service");
+const { createProfileManager } = require("../electron/profiles");
 
 function createTestService(dialog = {}) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "bodycomp-test-"));
@@ -160,6 +161,38 @@ test("migrations are idempotent when reopening the user database", (t) => {
   reopened.close();
 });
 
+test("local profile registry isolates databases and restores the selected profile", (t) => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "bodycomp-profiles-test-"));
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  const makeManager = () => createProfileManager({
+    userDataPath: directory,
+    dialog: {},
+    createService,
+  });
+  let manager = makeManager();
+  const first = manager.create("Alex");
+  const firstService = manager.getActiveService();
+  const firstExercise = firstService.invoke("exercises:list", []).find((item) => item.name === "Barbell bench press");
+  firstService.invoke("workouts:create", [{
+    startedAt: "2025-01-10T10:00:00.000Z",
+    exercises: [{ exerciseId: firstExercise.id, sets: [{ weightKg: 60, reps: 8 }] }],
+  }]);
+  const second = manager.create("Blair");
+  assert.notEqual(first.id, second.id);
+  assert.deepEqual(manager.getActiveService().invoke("workouts:list", []), []);
+  manager.open(first.id);
+  assert.equal(manager.getActiveService().invoke("workouts:list", []).length, 1);
+  assert.throws(() => manager.open("../not-a-profile"), /valid local profile/);
+  manager.close();
+  manager = makeManager();
+  assert.equal(manager.getActiveProfile().id, first.id);
+  assert.equal(manager.getActiveService().invoke("workouts:list", []).length, 1);
+  manager.remove(first.id);
+  assert.equal(manager.getActiveProfile(), null);
+  assert.equal(manager.list().length, 1);
+  manager.close();
+});
+
 test("recovery service learns muscle duration after three repeat transitions", (t) => {
   const context = createTestService();
   t.after(() => context.close());
@@ -210,6 +243,28 @@ test("recovery service learns muscle duration after three repeat transitions", (
   assert.deepEqual(pectorals.contributingExercises, ["Barbell bench press"]);
   assert.equal(pectorals.averageRir, 2);
   assert.equal(typeof pectorals.estimatedReadyAt, "string");
+});
+
+test("timestamp-only workout updates preserve sets and move their recovery instant", (t) => {
+  const context = createTestService();
+  t.after(() => context.close());
+  const { service } = context;
+  service.invoke("auth:register", [{
+    email: "timestamp@example.test", displayName: "Timestamp", password: "timestamp-password-1",
+  }]);
+  const exercise = service.invoke("exercises:list", []).find((item) => item.name === "Barbell bench press");
+  const startedAt = "2025-01-10T10:00:00.000Z";
+  const completedAt = "2025-01-10T10:30:00.000Z";
+  const workout = service.invoke("workouts:create", [{
+    startedAt, finishedAt: completedAt,
+    exercises: [{ exerciseId: exercise.id, sets: [{ weightKg: 50, reps: 8, completedAt }] }],
+  }]);
+  const changed = service.invoke("workouts:update-timestamp", [workout.id, {
+    startedAt: "2025-01-12T10:00:00.000Z", finishedAt: "2025-01-12T10:30:00.000Z",
+  }]);
+  assert.equal(changed.exercises[0].sets[0].completedAt, "2025-01-12T10:30:00.000Z");
+  assert.equal(changed.exercises[0].sets[0].reps, 8);
+  assert.equal(changed.exercises[0].sets[0].weightKg, 50);
 });
 
 test("new app database path leaves the legacy database untouched", (t) => {

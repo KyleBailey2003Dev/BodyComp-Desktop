@@ -1,12 +1,13 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 const allowedMethods = new Set([
-  "auth:register",
-  "auth:login",
-  "auth:logout",
-  "auth:current-user",
+  "profiles:list",
+  "profiles:create",
+  "profiles:select",
+  "profiles:rename",
+  "profiles:delete",
+  "profiles:current",
   "profile:update",
-  "profile:change-password",
   "profile:update-avatar",
   "recovery:get",
   "bodyweight:list",
@@ -22,6 +23,7 @@ const allowedMethods = new Set([
   "workouts:create",
   "workouts:list",
   "workouts:update",
+  "workouts:update-timestamp",
   "workouts:delete",
   "settings:get",
   "settings:update",

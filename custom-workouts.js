@@ -42,23 +42,6 @@
     });
     roleLabel.append(roleSelect);
 
-    const loadFactorLabel = document.createElement("label");
-    loadFactorLabel.textContent = "Load factor";
-    const loadFactorInput = document.createElement("input");
-    loadFactorInput.type = "number";
-    loadFactorInput.min = "0.1";
-    loadFactorInput.max = "2";
-    loadFactorInput.step = "0.1";
-    loadFactorInput.value = String(assignment.loadFactor ?? 1);
-    loadFactorInput.setAttribute(
-      "aria-label",
-      "Muscle load factor from 0.1 to 2.0",
-    );
-    loadFactorInput.addEventListener("input", () => {
-      assignment.loadFactor = Number(loadFactorInput.value);
-    });
-    loadFactorLabel.append(loadFactorInput);
-
     const removeButton = document.createElement("button");
     removeButton.className = "remove-muscle-button";
     removeButton.type = "button";

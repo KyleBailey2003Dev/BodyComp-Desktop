@@ -9,6 +9,14 @@ function getDatabasePath(userDataPath) {
   return path.join(userDataPath, currentDatabaseFilename);
 }
 
+function getProfileDatabasePath(userDataPath, profileId) {
+  if (!/^[0-9a-f-]{36}$/i.test(profileId)) throw new Error("Invalid local profile identifier.");
+  const directory = path.resolve(userDataPath, "profiles");
+  const target = path.resolve(directory, `${profileId}.sqlite`);
+  if (!target.startsWith(`${directory}${path.sep}`)) throw new Error("Invalid local profile database path.");
+  return target;
+}
+
 class SyncDatabase {
   constructor(databasePath, options = {}) {
     this.name = databasePath;
@@ -93,6 +101,7 @@ function openDatabase(databasePath) {
 
 module.exports = {
   getDatabasePath,
+  getProfileDatabasePath,
   migrateDatabase,
   openDatabase,
   openRawDatabase,

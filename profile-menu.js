@@ -6,7 +6,7 @@
     titlebar.insertAdjacentHTML(
       "beforeend",
       `<div class="auth-section">
-        <a id="signInButton" href="auth.html" class="text-button">Sign in</a>
+        <a id="signInButton" href="auth.html" class="text-button">Choose profile</a>
         <div id="profileSection" class="profile-section" hidden>
           <button id="profileMenuButton" class="profile-button" type="button" aria-label="User profile menu" aria-expanded="false" aria-haspopup="true">
             <span class="profile-avatar" id="profileAvatar"></span>
@@ -19,7 +19,7 @@
             <hr class="profile-divider" />
             <button id="profileLink" class="profile-menu-item" type="button" role="menuitem">View Profile</button>
             <button id="settingsButton" class="profile-menu-item" type="button" role="menuitem">Settings</button>
-            <button id="logoutButton" class="profile-menu-item" type="button" role="menuitem">Logout</button>
+            <button id="logoutButton" class="profile-menu-item" type="button" role="menuitem">Switch profile</button>
           </div>
         </div>
       </div>`,
@@ -47,14 +47,14 @@
       const user = await window.MuscleRecoveryApi.getCurrentUser();
       signInButton.hidden = true;
       profileSection.hidden = false;
-      const displayName = user.displayName || user.name || user.email || "User";
+      const displayName = user.displayName || "Local profile";
       profileAvatar.textContent = displayName
         .split(" ")
         .map((part) => part.charAt(0).toUpperCase())
         .join("")
         .slice(0, 2);
       profileName.textContent = displayName;
-      profileEmail.textContent = user.email || "";
+      profileEmail.textContent = "Stored locally";
     } catch {
       signInButton.hidden = false;
       profileSection.hidden = true;
@@ -95,8 +95,7 @@
 
   logoutButton.addEventListener("click", async () => {
     try {
-      await window.MuscleRecoveryApi.logout();
-      window.location.assign("index.html");
+      window.location.assign("auth.html");
     } catch (error) {
       console.error("Logout failed:", error);
       alert("Failed to logout. Please try again.");

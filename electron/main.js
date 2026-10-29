@@ -1,12 +1,12 @@
 const path = require("node:path");
 const { pathToFileURL, fileURLToPath } = require("node:url");
 const { app, BrowserWindow, dialog, ipcMain } = require("electron");
-const { getDatabasePath, openDatabase } = require("./database");
 const { registerIpcHandlers } = require("./ipc");
 const { createService } = require("./service");
+const { createProfileManager } = require("./profiles");
 
 const appRoot = path.resolve(__dirname, "..");
-let service;
+let profileManager;
 
 app.setPath("userData", path.join(app.getPath("appData"), "bodycomp-desktop"));
 
@@ -46,12 +46,19 @@ async function createWindow() {
   await window.loadURL(pathToFileURL(path.join(appRoot, "auth.html")).href);
 }
 
-registerIpcHandlers({ ipcMain, getService: () => service, isAppFile });
+registerIpcHandlers({
+  ipcMain,
+  getService: () => profileManager?.getActiveService(),
+  getProfileManager: () => profileManager,
+  isAppFile,
+});
 
 app.whenReady().then(async () => {
-  const databasePath = getDatabasePath(app.getPath("userData"));
-  const database = openDatabase(databasePath);
-  service = createService({ database, dialog, databasePath });
+  profileManager = createProfileManager({
+    userDataPath: app.getPath("userData"),
+    dialog,
+    createService,
+  });
   await createWindow();
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) void createWindow();
@@ -63,5 +70,5 @@ app.on("window-all-closed", () => {
 });
 
 app.on("before-quit", () => {
-  service?.close();
+  profileManager?.close();
 });

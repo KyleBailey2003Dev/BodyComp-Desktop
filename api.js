@@ -56,28 +56,23 @@
     createWorkout: (workout) => invoke("workouts:create", workout),
     getWorkouts: () => invoke("workouts:list"),
     updateWorkout: (id, workout) => invoke("workouts:update", id, workout),
+    updateWorkoutTimestamp: (id, timestamp) =>
+      invoke("workouts:update-timestamp", id, timestamp),
     deleteWorkout: (id) => invoke("workouts:delete", id),
     getSettings,
     updateSettings: (settings) => invoke("settings:update", settings),
     exportBackup: (payload) => invoke("backup:export", payload),
     restoreBackup: (payload) => invoke("backup:restore", payload),
     getCurrentUser: async () => {
-      currentUser = await invoke("auth:current-user");
+      currentUser = await invoke("profiles:current");
       return currentUser;
     },
     isLoggedIn: () => Boolean(currentUser),
-    register: async (account) => {
-      currentUser = await invoke("auth:register", account);
-      return currentUser;
-    },
-    login: async (credentials) => {
-      currentUser = await invoke("auth:login", credentials);
-      return currentUser;
-    },
-    logout: async () => {
-      await invoke("auth:logout");
-      currentUser = null;
-    },
+    getProfiles: () => invoke("profiles:list"),
+    createProfile: (displayName) => invoke("profiles:create", displayName),
+    selectProfile: (id) => invoke("profiles:select", id),
+    renameProfile: (id, displayName) => invoke("profiles:rename", id, displayName),
+    deleteProfile: (id) => invoke("profiles:delete", id),
     updateAvatar,
     updateProfile: (profile) => invoke("profile:update", profile),
     changePassword: (payload) => invoke("profile:change-password", payload),

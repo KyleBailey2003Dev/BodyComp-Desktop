@@ -343,7 +343,7 @@ function createService({ database, dialog, databasePath }) {
 
   function requireProfile() {
     const profileId = activeProfileId();
-    if (!profileId) fail("Sign in to use your local profile.");
+    if (!profileId) fail("Select a local profile to continue.");
     return profileId;
   }
 
@@ -626,6 +626,44 @@ function createService({ database, dialog, databasePath }) {
   }
 
   const methods = {
+    "local:bootstrap-profile(profile)": (profile) => {
+      requireObject(profile, "Local profile");
+      const id = requireText(profile.id, "Local profile identifier", 80);
+      const displayName = requireText(profile.displayName, "Profile name", 80);
+      const existing = db.prepare("SELECT id FROM profiles LIMIT 1").get();
+      if (existing) return publicProfile(existing.id);
+      const internalCredential = savePassword(
+        crypto.randomBytes(48).toString("base64url"),
+      );
+      db.transaction(() => {
+        db.prepare(
+          "INSERT INTO profiles (id, email, display_name, password_salt, password_hash, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+        ).run(
+          id,
+          `${id}@local.bodycomp`,
+          displayName,
+          internalCredential.salt,
+          internalCredential.hash,
+          new Date().toISOString(),
+        );
+        db.prepare("INSERT INTO profile_settings (profile_id) VALUES (?)").run(
+          id,
+        );
+        db.prepare(
+          "UPDATE app_state SET active_profile_id = ? WHERE id = 1",
+        ).run(id);
+      })();
+      seedStarterExercises(id);
+      return publicProfile(id);
+    },
+    "local:rename-profile(displayName)": (displayName) => {
+      const profileId = requireProfile();
+      db.prepare("UPDATE profiles SET display_name = ? WHERE id = ?").run(
+        requireText(displayName, "Profile name", 80),
+        profileId,
+      );
+      return publicProfile(profileId);
+    },
     "auth:register(account)": (account) => {
       requireObject(account, "Account");
       const email = requireText(account.email, "Email", 254).toLowerCase();
@@ -949,6 +987,47 @@ function createService({ database, dialog, databasePath }) {
           profileId,
         );
         writeWorkoutExercises(workoutId, workout.exercises);
+      })();
+      return readWorkout(workoutId, profileId);
+    },
+    "workouts:update-timestamp(id, payload)": (id, payload) => {
+      requireObject(payload, "Workout timestamp");
+      const profileId = requireProfile();
+      const workoutId = validNumber(id, "Workout", { integer: true, min: 1 });
+      const current = db
+        .prepare(
+          "SELECT started_at AS startedAt, finished_at AS finishedAt FROM workouts WHERE id = ? AND profile_id = ?",
+        )
+        .get(workoutId, profileId);
+      if (!current) fail("Workout was not found.");
+      const startedAt = validDate(payload.startedAt, "Workout start time");
+      const finishedAt = validDate(
+        payload.finishedAt,
+        "Workout finish time",
+        true,
+      );
+      if (finishedAt && Date.parse(finishedAt) < Date.parse(startedAt))
+        fail("Workout finish time cannot be before its start time.");
+      const offset = Date.parse(startedAt) - Date.parse(current.startedAt);
+      db.transaction(() => {
+        db.prepare(
+          "UPDATE workouts SET started_at = ?, finished_at = ? WHERE id = ? AND profile_id = ?",
+        ).run(startedAt, finishedAt, workoutId, profileId);
+        const sets = db
+          .prepare(
+            `SELECT ws.id, ws.completed_at AS completedAt FROM workout_sets ws
+           JOIN workout_exercises we ON we.id = ws.workout_exercise_id
+           WHERE we.workout_id = ?`,
+          )
+          .all(workoutId);
+        const updateSet = db.prepare(
+          "UPDATE workout_sets SET completed_at = ? WHERE id = ?",
+        );
+        for (const set of sets)
+          updateSet.run(
+            new Date(Date.parse(set.completedAt) + offset).toISOString(),
+            set.id,
+          );
       })();
       return readWorkout(workoutId, profileId);
     },

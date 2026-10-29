@@ -15,11 +15,26 @@
   const addSecondaryMuscle = document.querySelector("#addSecondaryMuscle");
   const saveCustomExercise = document.querySelector("#saveCustomExercise");
   const customExerciseStatus = document.querySelector("#customExerciseStatus");
-  const workoutStartedAt = new Date().toISOString();
+  const workoutDate = document.querySelector("#workoutDate");
+  const workoutTime = document.querySelector("#workoutTime");
   let exercises = [];
   let muscleGroups = [];
   let workoutExercises = [];
   let customMuscleAssignments = [];
+
+  function localDateTimeParts(value = new Date()) {
+    const offset = value.getTimezoneOffset() * 60_000;
+    const local = new Date(value.getTime() - offset).toISOString();
+    return { date: local.slice(0, 10), time: local.slice(11, 16) };
+  }
+
+  function selectedStartedAt() {
+    const date = workoutDate.value;
+    const time = workoutTime.value;
+    if (!date || !time) return null;
+    const instant = new Date(`${date}T${time}`);
+    return Number.isNaN(instant.getTime()) ? null : instant.toISOString();
+  }
 
   function setStatus(message, kind = "") {
     status.textContent = message;
@@ -225,9 +240,10 @@
   }
 
   function workoutPayload() {
+    const startedAt = selectedStartedAt();
     return {
-      startedAt: workoutStartedAt,
-      finishedAt: new Date().toISOString(),
+      startedAt,
+      finishedAt: startedAt,
       notes: notes.value.trim() || undefined,
       exercises: workoutExercises.map((exercise) => ({
         exerciseId: Number(exercise.id),
@@ -239,7 +255,7 @@
                 (exercise.weightUnit === "lb" ? 0.45359237 : 1),
           reps: Number(set.reps),
           rir: set.rir === "" ? undefined : Number(set.rir),
-          completedAt: new Date().toISOString(),
+          completedAt: startedAt,
         })),
       })),
     };
@@ -365,6 +381,10 @@
   }
 
   function validateWorkout() {
+    if (!selectedStartedAt()) {
+      setStatus("Choose a valid local workout date and start time.", "error");
+      return false;
+    }
     if (!workoutExercises.length) {
       setStatus(
         "Add at least one exercise before finishing your workout.",
@@ -396,6 +416,10 @@
   }
 
   saveCustomExercise.addEventListener("click", saveCustomWorkout);
+
+  const initialDateTime = localDateTimeParts();
+  workoutDate.value = initialDateTime.date;
+  workoutTime.value = initialDateTime.time;
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();

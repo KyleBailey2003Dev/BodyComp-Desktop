@@ -42,17 +42,17 @@ const muscles = [
   muscle(
     "Pectorals",
     "Primary chest muscles for pressing and shoulder flexion.",
-    ["leftPec", "rightPec"],
+    ["leftPec", "leftPecLower", "rightPec", "rightPecLower"],
   ),
   muscle(
     "Biceps",
     "Front upper-arm flexors used in curls, rows, and pulling work.",
-    ["leftBiceps", "rightBiceps"],
+    ["leftBiceps", "leftBrachialis", "rightBiceps", "rightBrachialis"],
   ),
   muscle(
     "Forearms",
     "Grip and wrist control muscles used in carries, curls, and pulling.",
-    ["leftForearm", "rightForearm"],
+    ["leftForearm", "leftForearmExtensor", "rightForearm", "rightForearmExtensor"],
   ),
   muscle(
     "Rectus Abdominis",
@@ -90,7 +90,7 @@ const muscles = [
   muscle(
     "Trapezius",
     "Upper-back muscle used in shrugs, carries, rows, and deadlifts.",
-    ["leftTrap", "rightTrap"],
+    ["leftTrap", "leftLowerTrap", "rightTrap", "rightLowerTrap"],
   ),
   muscle(
     "Rear Deltoids",
@@ -100,7 +100,7 @@ const muscles = [
   muscle(
     "Triceps",
     "Back upper-arm muscles used in presses, dips, and extensions.",
-    ["leftTricep", "rightTricep"],
+    ["leftTricep", "leftTricepLongHead", "rightTricep", "rightTricepLongHead"],
   ),
   muscle(
     "Rhomboids",
@@ -110,7 +110,7 @@ const muscles = [
   muscle(
     "Lats",
     "Large back muscles that drive pull-ups, pulldowns, and rows.",
-    ["leftLat", "rightLat"],
+    ["leftLat", "leftTeresMajor", "rightLat", "rightTeresMajor"],
   ),
   muscle(
     "Lower Back",
@@ -245,6 +245,11 @@ const regionBuilders = {
       ["Z"],
     ]),
   rightPec: () => mirror(regionBuilders.leftPec()),
+  leftPecLower: () => path([
+    ["M", 160, 260], ["C", 182, 274, 211, 279, 250, 268],
+    ["L", 250, 286], ["C", 204, 296, 174, 285, 160, 260], ["Z"],
+  ]),
+  rightPecLower: () => mirror(regionBuilders.leftPecLower()),
   leftBiceps: () =>
     path([
       ["M", 143, 265],
@@ -254,6 +259,11 @@ const regionBuilders = {
       ["Z"],
     ]),
   rightBiceps: () => mirror(regionBuilders.leftBiceps()),
+  leftBrachialis: () => path([
+    ["M", 150, 280], ["C", 157, 304, 155, 331, 144, 350],
+    ["L", 128, 355], ["C", 119, 326, 124, 295, 143, 270], ["Z"],
+  ]),
+  rightBrachialis: () => mirror(regionBuilders.leftBrachialis()),
   leftTricep: () =>
     path([
       ["M", 143, 265],
@@ -263,6 +273,11 @@ const regionBuilders = {
       ["Z"],
     ]),
   rightTricep: () => mirror(regionBuilders.leftTricep()),
+  leftTricepLongHead: () => path([
+    ["M", 147, 268], ["C", 142, 292, 141, 322, 131, 350],
+    ["L", 145, 345], ["C", 158, 316, 161, 286, 153, 272], ["Z"],
+  ]),
+  rightTricepLongHead: () => mirror(regionBuilders.leftTricepLongHead()),
   leftForearm: () =>
     path([
       ["M", 126, 354],
@@ -272,6 +287,11 @@ const regionBuilders = {
       ["Z"],
     ]),
   rightForearm: () => mirror(regionBuilders.leftForearm()),
+  leftForearmExtensor: () => path([
+    ["M", 127, 356], ["C", 109, 390, 104, 433, 108, 465],
+    ["L", 120, 472], ["C", 135, 429, 141, 389, 140, 365], ["Z"],
+  ]),
+  rightForearmExtensor: () => mirror(regionBuilders.leftForearmExtensor()),
   leftUpperAbs: () =>
     path([
       ["M", 232, 300],
@@ -378,6 +398,10 @@ const regionBuilders = {
       ["Z"],
     ]),
   rightTrap: () => mirror(regionBuilders.leftTrap()),
+  leftLowerTrap: () => path([
+    ["M", 255, 284], ["L", 229, 315], ["L", 253, 341], ["L", 260, 292], ["Z"],
+  ]),
+  rightLowerTrap: () => mirror(regionBuilders.leftLowerTrap()),
   leftRearDelt: () =>
     path([
       ["M", 204, 193],
@@ -409,6 +433,11 @@ const regionBuilders = {
       ["Z"],
     ]),
   rightLat: () => mirror(regionBuilders.leftLat()),
+  leftTeresMajor: () => path([
+    ["M", 202, 260], ["C", 190, 266, 187, 278, 194, 288],
+    ["L", 209, 299], ["L", 220, 275], ["Z"],
+  ]),
+  rightTeresMajor: () => mirror(regionBuilders.leftTeresMajor()),
   leftLowerBack: () =>
     path([
       ["M", 254, 322],

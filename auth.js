@@ -1,62 +1,61 @@
 (() => {
-  const form = document.querySelector("#authForm");
-  const title = document.querySelector("#authTitle");
-  const modeButton = document.querySelector("#authMode");
-  const submit = document.querySelector("#authSubmit");
-  const displayNameField = document.querySelector("#displayNameField");
-  const displayName = document.querySelector("#displayName");
-  const email = document.querySelector("#email");
-  const password = document.querySelector("#password");
-  const passwordHint = document.querySelector("#passwordHint");
+  const list = document.querySelector("#profileList");
+  const form = document.querySelector("#createProfileForm");
+  const name = document.querySelector("#newProfileName");
+  const create = document.querySelector("#createProfileButton");
   const status = document.querySelector("#authStatus");
-  let registering = false;
 
-  function renderMode() {
-    title.textContent = registering ? "Create account" : "Sign in";
-    submit.textContent = registering ? "Create account" : "Sign in";
-    modeButton.textContent = registering
-      ? "Already have an account? Sign in"
-      : "Need an account? Create one";
-    displayNameField.hidden = !registering;
-    displayName.required = registering;
-    passwordHint.hidden = !registering;
-    password.autocomplete = registering ? "new-password" : "current-password";
-    status.textContent = "";
+  function setStatus(message, kind = "") {
+    status.textContent = message;
+    status.className = `form-status ${kind}`;
   }
 
-  modeButton.addEventListener("click", () => {
-    registering = !registering;
-    renderMode();
-  });
+  async function selectProfile(id, button) {
+    button.disabled = true;
+    setStatus("Opening local profile…");
+    try {
+      await window.MuscleRecoveryApi.selectProfile(id);
+      window.location.assign("index.html");
+    } catch (error) {
+      button.disabled = false;
+      setStatus(error.message || "Unable to open this local profile.", "error");
+    }
+  }
+
+  async function load() {
+    try {
+      const profiles = await window.MuscleRecoveryApi.getProfiles();
+      list.innerHTML = "";
+      if (!profiles.length) {
+        list.innerHTML = '<p class="empty-state">Create a local profile to get started.</p>';
+        return;
+      }
+      profiles.forEach((profile) => {
+        const button = document.createElement("button");
+        button.className = "button button-secondary";
+        button.type = "button";
+        button.textContent = profile.displayName;
+        button.addEventListener("click", () => selectProfile(profile.id, button));
+        list.append(button);
+      });
+    } catch (error) {
+      setStatus(error.message || "Unable to load local profiles.", "error");
+    }
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
-    submit.disabled = true;
-    status.className = "form-status";
-    status.textContent = registering ? "Creating your account…" : "Signing in…";
+    create.disabled = true;
+    setStatus("Creating local profile…");
     try {
-      if (registering)
-        await window.MuscleRecoveryApi.register({
-          email: email.value,
-          password: password.value,
-          displayName: displayName.value.trim(),
-        });
-      else
-        await window.MuscleRecoveryApi.login({
-          email: email.value,
-          password: password.value,
-        });
+      await window.MuscleRecoveryApi.createProfile(name.value);
       window.location.assign("index.html");
     } catch (error) {
-      submit.disabled = false;
-      status.className = "form-status error";
-      status.textContent = error.message || "Unable to continue.";
+      create.disabled = false;
+      setStatus(error.message || "Unable to create this local profile.", "error");
     }
   });
 
-  window.MuscleRecoveryApi.getCurrentUser()
-    .then((user) => {
-      if (user) window.location.assign("index.html");
-    })
-    .catch(() => {});
+  load();
 })();

@@ -424,6 +424,23 @@ h2 {
   align-items: center;
 }
 
+.workout-time-fields {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(120px, 0.7fr) minmax(180px, 1.3fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.workout-time-fields label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 750;
+}
+
+.workout-time-fields .field-hint { margin: 0 0 8px; }
+
 .notes-field,
 .exercise-picker,
 .custom-exercise-name-field,
@@ -781,6 +798,8 @@ textarea {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
+
+.timestamp-actions { display: flex; gap: 10px; align-items: center; }
 .history-session-fields label,
 .history-exercise-header label {
   display: grid;
@@ -854,6 +873,9 @@ textarea {
   width: min(440px, 100%);
   margin: auto;
 }
+
+.profile-list { display: grid; gap: 8px; margin: 16px 0; }
+.profile-list .button { text-align: left; }
 .auth-copy {
   color: var(--muted);
   line-height: 1.5;
@@ -1011,6 +1033,7 @@ textarea {
 
 @media (max-width: 600px) {
   .workout-heading,
+  .workout-time-fields,
   .exercise-picker > div,
   .workout-actions,
   .custom-exercise-header,
