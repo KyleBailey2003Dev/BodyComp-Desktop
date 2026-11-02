@@ -45,14 +45,6 @@ const starterExercises = [
     ],
   ],
   [
-    "Pull-up",
-    [
-      ["lats", "primary"],
-      ["biceps", "secondary"],
-      ["forearms", "secondary"],
-    ],
-  ],
-  [
     "Lat pulldown",
     [
       ["lats", "primary"],
@@ -123,14 +115,6 @@ const starterExercises = [
     ],
   ],
   ["Standing calf raise", [["calves", "primary"]]],
-  [
-    "Plank",
-    [
-      ["rectus-abdominis", "primary"],
-      ["obliques", "secondary"],
-    ],
-  ],
-  ["Crunch", [["rectus-abdominis", "primary"]]],
   [
     "Hanging knee raise",
     [
