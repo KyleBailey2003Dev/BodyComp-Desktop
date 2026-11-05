@@ -91,6 +91,8 @@ button {
   font-weight: 850;
   letter-spacing: 0;
   text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
 }
 
 h1,
