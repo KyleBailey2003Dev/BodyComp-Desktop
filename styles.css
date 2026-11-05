@@ -408,6 +408,8 @@ h2 {
 .workout-page {
   width: min(900px, 100%);
   margin: 0 auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .workout-form,
