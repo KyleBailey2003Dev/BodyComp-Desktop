@@ -1,7 +1,7 @@
 :root {
   color-scheme: dark;
-  --bg: #11151c;
-  --surface: #171c25;
+  --bg: #2c3747;
+  --surface: #32415d;
   --surface-2: #202632;
   --surface-3: #282f3c;
   --text: #f4f6fb;
@@ -69,6 +69,7 @@ button {
   min-height: 70px;
   padding: 12px 22px;
   border-radius: 8px;
+  max-height: 120px;
 }
 
 .workout-page-titlebar {
@@ -90,6 +91,8 @@ button {
   font-weight: 850;
   letter-spacing: 0;
   text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
 }
 
 h1,
@@ -405,6 +408,8 @@ h2 {
 .workout-page {
   width: min(900px, 100%);
   margin: 0 auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .workout-form,
@@ -426,7 +431,10 @@ h2 {
 
 .workout-time-fields {
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) minmax(120px, 0.7fr) minmax(180px, 1.3fr);
+  grid-template-columns: minmax(150px, 1fr) minmax(120px, 0.7fr) minmax(
+      180px,
+      1.3fr
+    );
   gap: 12px;
   align-items: end;
 }
@@ -439,7 +447,9 @@ h2 {
   font-weight: 750;
 }
 
-.workout-time-fields .field-hint { margin: 0 0 8px; }
+.workout-time-fields .field-hint {
+  margin: 0 0 8px;
+}
 
 .notes-field,
 .exercise-picker,
@@ -528,10 +538,9 @@ h2 {
 
 .custom-workout-assignment-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(110px, 0.4fr) minmax(
-      110px,
-      0.4fr
-    ) auto;
+  grid-template-columns:
+    minmax(0, 1fr) minmax(110px, 0.4fr) minmax(110px, 0.4fr)
+    auto;
   align-items: end;
   gap: 10px;
 }
@@ -799,7 +808,11 @@ textarea {
   gap: 12px;
 }
 
-.timestamp-actions { display: flex; gap: 10px; align-items: center; }
+.timestamp-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 .history-session-fields label,
 .history-exercise-header label {
   display: grid;
@@ -874,8 +887,14 @@ textarea {
   margin: auto;
 }
 
-.profile-list { display: grid; gap: 8px; margin: 16px 0; }
-.profile-list .button { text-align: left; }
+.profile-list {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+}
+.profile-list .button {
+  text-align: left;
+}
 .auth-copy {
   color: var(--muted);
   line-height: 1.5;
