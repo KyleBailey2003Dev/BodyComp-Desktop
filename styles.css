@@ -1245,6 +1245,28 @@ textarea {
   text-decoration: underline;
 }
 
+.encyclopedia-page {
+  display: grid;
+  gap: 18px;
+}
+
+.muscle-group-button{
+  display: grid;
+  gap: 8px;
+  place-items: center;
+  min-height: 42px;
+  padding: 9px 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.muscle-group-button:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+}
+
 @media (max-width: 780px) {
   .composition-layout {
     grid-template-columns: 1fr;

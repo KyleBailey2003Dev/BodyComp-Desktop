@@ -31,6 +31,11 @@ const NAV_CONFIG = [
     href: "workout-history.html",
     icon: "History",
   },
+  {
+    label: "Workout Encyclopedia",
+    href: "workout-encyclopedia.html",
+    icon: "ðŸ“Š",
+  }
   // Future items can be added here without modifying any HTML files:
   // {
   //   label: 'History',

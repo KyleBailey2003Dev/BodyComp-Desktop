@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Encyclopedia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="titlebar">
+            <div>
+                <p class="eyebrow">Body Comp</p>
+                <h1>Workout Encyclopedia</h1>
+            </div>
+        </header>
+
+        <section class="encyclopedia-page">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Exercise Library</p>
+                        <h2>Explore Workouts</h2>
+                    </div>
+                </div>
+
+                <div class = "muscleGroup-list" id="muscleGroup-list" aria-label="Muscle groups">
+                 
+                    <button class="muscle-group-button" data-muscle-group="chest">Chest</button>
+                    <button class="muscle-group-button" data-muscle-group="back">Back</button>
+                    <button class="muscle-group-button" data-muscle-group="legs">Legs</button>
+                    <button class="muscle-group-button" data-muscle-group="arms">Arms</button>
+                    <button class="muscle-group-button" data-muscle-group="shoulders">Shoulders</button>
+                    <button class="muscle-group-button" data-muscle-group="core">Core</button>
+                </div>
+
+                <div
+                    id="workoutEncyclopedia"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="nav-config.js"></script>
+    <script src="nav-utils.js"></script>
+    <script src="api.js"></script>
+    <script src="profile-menu.js"></script>
+    <script src="workout-encyclopedia.js"></script>
+
+</body>
+</html>
