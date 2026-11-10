@@ -21,6 +21,11 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -1262,6 +1267,62 @@ textarea {
 
 .composition-link:hover {
   text-decoration: underline;
+}
+
+.encyclopedia-page {
+  display: grid;
+  gap: 18px;
+}
+
+.encyclopedia-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.muscle-group-button{
+  display: grid;
+  gap: 90px;
+  place-items: center;
+  min-height: 42px;
+  padding: 9px 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.muscle-group-button:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+}
+
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.exercise-toggle-button {
+  min-height: 42px;
+  padding: 9px 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--text);
+  align-items: center;
+}
+
+.exercise-toggle-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--surface-3);
+  color: var(--accent);
+}
+
+.exercise-toggle-button:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
 }
 
 @media (max-width: 780px) {

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Encyclopedia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="titlebar">
+            <div>
+                <p class="eyebrow">Body Comp</p>
+                <h1>Workout Encyclopedia</h1>
+            </div>
+        </header>
+
+        <section class="encyclopedia-page">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Exercise Library</p>
+                        <h2>Explore Workouts</h2>
+                    </div>
+                </div>
+
+                <div class ="button-group">
+
+                    <a href="workout-encyclopedia.html#chestGroupSection" class="muscle-group-button" data-muscle-group="chest">Chest</a>
+                    <a href="workout-encyclopedia.html#backGroupSection" class="muscle-group-button" data-muscle-group="back">Back</a>
+                    <a href="workout-encyclopedia.html#legsGroupSection" class="muscle-group-button" data-muscle-group="legs">Legs</a>
+                    <a href="workout-encyclopedia.html#armsGroupSection" class="muscle-group-button" data-muscle-group="arms">Arms</a>
+                    <a href="workout-encyclopedia.html#shouldersGroupSection" class="muscle-group-button" data-muscle-group="shoulders">Shoulders</a>
+                    <a href="workout-encyclopedia.html#coreGroupSection" class="muscle-group-button" data-muscle-group="core">Core</a>
+
+                </div>
+
+                <div
+                    id="workoutEncyclopedia"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+
+        <section class="chestGroup-section" id="chestGroupSection">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Chest Exercises</p>
+                        <h2>Chest Workouts</h2>
+                    </div>
+                </div>
+
+                <div
+                    id="chestExercises"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+
+
+        <section class="backGroup-section" id="backGroupSection">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Back Exercises</p>
+                        <h2>Back Workouts</h2>
+                    </div>
+                </div>
+
+                <div
+                    id="backExercises"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+
+        <section class="legsGroup-section" id="legsGroupSection">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Leg Exercises</p>
+                        <h2>Leg Workouts</h2>
+                    </div>
+                </div>
+
+                <div
+                    id="legsExercises"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+
+        <section class="armsGroup-section" id="armsGroupSection">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Arm Exercises</p>
+                        <h2>Arm Workouts</h2>
+                    </div>
+                </div>
+
+                <div
+                    id="armsExercises"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+
+        <section class="shouldersGroup-section" id="shouldersGroupSection">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Shoulder Exercises</p>
+                        <h2>Shoulder Workouts</h2>
+
+                        <button id="overheadPressButton" class="exercise-toggle-button" aria-pressed="false">Overhead Press</button>
+                        <button id="lateralRaiseButton" class="exercise-toggle-button" aria-pressed="false">Lateral Raise</button>
+                        <button id="rearDeltFly" class="exercise-toggle-button" aria-pressed="false">Rear Delt Fly</button>
+                        <button id="frontRaiseButton" class="exercise-toggle-button" aria-pressed="false">Front Raise</button>
+                        <button id="arnoldPressButton" class="exercise-toggle-button" aria-pressed="false">Arnold Press</button>
+                        <button id="shrugsButton" class="exercise-toggle-button" aria-pressed="false">Shrugs</button>
+
+                    </div>
+                </div>
+
+                <div
+                    id="shouldersExercises"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+
+        <section class="coreGroup-section" id="coreGroupSection">
+            <div class="panel encyclopedia-panel">
+                <div class="encyclopedia-heading">
+                    <div>
+                        <p class="eyebrow">Core Exercises</p>
+                        <h2>Core Workouts</h2>
+                    </div>
+                </div>
+
+                <div
+                    id="coreExercises"
+                    class="workout-exercises"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="nav-config.js"></script>
+    <script src="nav-utils.js"></script>
+    <script src="api.js"></script>
+    <script src="profile-menu.js"></script>
+    <script src="workout-encyclopedia.js"></script>
+
+</body>
+</html>
