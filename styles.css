@@ -1303,6 +1303,9 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 10px;
 }
+.button-row {
+  gap: 10px;
+}
 
 .exercise-toggle-button {
   min-height: 42px;
