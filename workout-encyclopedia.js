@@ -6,6 +6,12 @@
         "Press a barbell or dumbbells straight overhead from your shoulder.",
       image: "assets/Gifs/Dumbbell-Shoulder-Press.gif",
     },
+    lateralRaiseButton: {
+      name: "Lateral Raise",
+      description:
+        "Grab two dumbbells in each hand and raise your arms out straight and to the sides.",
+      image: "assets/Gifs/Dumbbell-Lateral-Raise.gif",
+    },
   };
 
   const exerciseButtons = document.querySelectorAll(".exercise-toggle-button");

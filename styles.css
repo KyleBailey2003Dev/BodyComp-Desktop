@@ -1281,7 +1281,7 @@ textarea {
   align-items: center;
 }
 
-.muscle-group-button{
+.muscle-group-button {
   display: grid;
   gap: 90px;
   place-items: center;
@@ -1323,6 +1323,72 @@ textarea {
 .exercise-toggle-button:hover {
   border-color: var(--accent);
   background: var(--surface-3);
+}
+
+dialog#exerciseModal {
+  border: 1px solid rgba(255, 255, 255, 0, 12);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 480px;
+  width: 90%;
+  background-color: #1a1d24;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  margin: auto;
+}
+
+dialog#exerciseModal::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+dialog#exerciseModal[open] {
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#exercise-details p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+#exercise-details img {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #0f1115;
+  margin-bottom: 20px;
+}
+
+#close-button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+#close-button:hover {
+  background-color: #2563eb;
 }
 
 @media (max-width: 780px) {
