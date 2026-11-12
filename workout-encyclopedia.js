@@ -18,19 +18,19 @@
         "A reversed version of the Pec Fly machine that involves using the Rear Deltoid Muscles.",
       image: "assets/Gifs/reverse-machine-fly.webp",
     },
-    frontRaise: {
+    frontRaiseButton: {
       name: "Front Raise",
       description:
         "Grab two dumbbells in each hand and bring them to shoulder level while keeping your arms straight in front of you.",
       image: "assets/Gifs/Dumbbell-Front-Raise-GIF.gif",
     },
-    arnoldPress: {
+    arnoldPressButton: {
       name: "Arnold Press",
       description:
         "Invented by legendary bodybuilder Arnold Schwarzenegger, this exercise involves a traditional overhead press while rotating the wrists.",
       image: "assets/Gifs/arnold-press.gif",
     },
-    shrugs: {
+    shrugsButton: {
       name: "Shrugs",
       description:
         "Grab two dumbbells in each hand and keep your arms by your side while shrugging your shoulders up. This workout primary targets the Trapezius.",
