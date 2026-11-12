@@ -8,7 +8,10 @@ The app uses Electron 44's bundled `node:sqlite` runtime and has integration cov
 
 ## Development
 
-Requirements: Node.js 22.12 or newer and npm. Run `npm install`, then `npm run desktop:dev`. The app works offline after installation. Run `npm test` for SQLite persistence, profile isolation, validation, and backup/restore tests.
+Requirements: Node.js 22.12 or newer and npm. For Windows setup commands,
+including the PowerShell `npm.cmd` workaround, see [DEVELOPMENT.md](DEVELOPMENT.md).
+The app works offline after installation. Run `npm test` for SQLite
+persistence, profile isolation, validation, and backup/restore tests.
 
 The database is created and migrated on first launch. In Settings, users can export an encrypted full-profile backup or restore one after validation and confirmation. The live database must stay in the app-data folder; a user may choose a OneDrive or other synced folder for backup files only.
 
