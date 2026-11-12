@@ -21,5 +21,19 @@
     <p>${exercise.description}</p>
         <img src ="${exercise.image}" alt="${exercise.name}" style="max-width: 100%
         `;
+    modal.showModal();
   }
+
+  exerciseButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedExercise = exerciseData[button.id];
+      openExerciseDetails(selectedExercise);
+    });
+  });
+
+  closeButton.addEventListener("click", (e) => {
+    if (e.target == modal) {
+      modal.close();
+    }
+  });
 })();
