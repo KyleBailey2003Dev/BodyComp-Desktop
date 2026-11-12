@@ -9,7 +9,7 @@
   };
 
   const exerciseButtons = document.querySelectorAll(".exercise-toggle-button");
-  const modal = document.getElementById("exercise-modal");
+  const modal = document.getElementById("exercisemodal");
   const exerciseDetails = document.getElementById("exercise-details");
   const closeButton = document.getElementById("close-button");
 
