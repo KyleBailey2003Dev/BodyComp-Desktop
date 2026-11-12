@@ -3,13 +3,13 @@
     overheadPressButton: {
       name: "Overhead Press",
       description:
-        "Press a barbell or dumbbells straight overhead from your shoulder",
-      image: "assets\Gifs\Dumbbell-Shoulder-Press.gif",
+        "Press a barbell or dumbbells straight overhead from your shoulder.",
+      image: "assets/Gifs/Dumbbell-Shoulder-Press.gif",
     },
   };
 
   const exerciseButtons = document.querySelectorAll(".exercise-toggle-button");
-  const modal = document.getElementById("exercisemodal");
+  const modal = document.getElementById("exerciseModal"); // Matches HTML id="exerciseModal"
   const exerciseDetails = document.getElementById("exercise-details");
   const closeButton = document.getElementById("close-button");
 
@@ -17,10 +17,10 @@
     if (!exercise) return;
 
     exerciseDetails.innerHTML = `
-    <h2>${exercise.name}</h2>
-    <p>${exercise.description}</p>
-        <img src ="${exercise.image}" alt="${exercise.name}" style="max-width: 100%
-        `;
+      <h2>${exercise.name}</h2>
+      <p>${exercise.description}</p>
+      <img src="${exercise.image}" alt="${exercise.name}" style="max-width: 100%; height: auto;" />
+    `;
     modal.showModal();
   }
 
@@ -31,8 +31,12 @@
     });
   });
 
-  closeButton.addEventListener("click", (e) => {
-    if (e.target == modal) {
+  closeButton.addEventListener("click", () => {
+    modal.close();
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
       modal.close();
     }
   });
