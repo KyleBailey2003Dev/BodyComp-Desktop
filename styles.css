@@ -998,18 +998,18 @@ textarea {
   border: 1px solid var(--line-strong);
   border-radius: 6px;
   background: transparent;
+  background-color: #3a5581;
   color: var(--text);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease;
   cursor: pointer;
 }
 
 .nav-hub__link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-soft);
+  background-color: #152b3d;
+  transform: translateY() 0.2s ease;
 }
 
 .nav-hub__link.active {
