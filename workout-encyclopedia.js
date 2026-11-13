@@ -1,5 +1,41 @@
 (() => {
   const exerciseData = {
+    benchPress: {
+      name: "Bench Press",
+      description:
+        "Grab a barbell or two dumbbells, lay flat on a bench, and press them up from your chest to the top.",
+      image: "assets/Gifs/Dumbbell-Chest-Press.gif",
+    },
+    inclineBenchPress: {
+      name: "Incline Bench Press",
+      description:
+        "Set the bench to a 45 degree incline and bench from there to target the upper pectorals more.",
+      image: "assets/Gifs/Dumbbell-Incline-Press.gif",
+    },
+    declineBenchPress: {
+      name: "Decline Bench Press",
+      description:
+        "Set the bench to a slight decline and bench from there to target the lower pectorals more.",
+      image: "assets/Gifs/declinebench.gif",
+    },
+    pecFly: {
+      name: "Pec Fly",
+      description:
+        "On the Pec Fly machine, grab the two handles and pull them together while keeping your arms straight and at chest level.",
+      image: "assets/Gifs/machine-chest-fly.webp",
+    },
+    dips: {
+      name: "Chest Dips",
+      description:
+        "Grab the two handles of a dip station and dip your body down until your chest reaches your hands.",
+      image: "assets/Gifs/Dips.gif",
+    },
+    cableCrossover: {
+      name: "Cable Crossover",
+      description:
+        "Grab the ends of two cable machines and pull them down together to your lower chest.",
+      image: "assets/Gifs/Decline-Fly-Mistake-leaning-forward.webp",
+    },
     overheadPressButton: {
       name: "Overhead Press",
       description:
