@@ -1009,7 +1009,7 @@ textarea {
 
 .nav-hub__link:hover {
   background-color: #152b3d;
-  transform: translateY() 0.2s ease;
+  transform: translateY(-2px);
 }
 
 .nav-hub__link.active {
