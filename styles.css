@@ -1292,7 +1292,6 @@ textarea {
   place-items: center;
   min-height: 42px;
   padding: 9px 15px;
-  border: 1px solid var(--line);
   border-radius: 7px;
   background: var(--surface-2);
   color: var(--text);
@@ -1300,6 +1299,7 @@ textarea {
   transition:
     background-color 0.3s ease,
     transform 0.2s ease;
+  text-decoration: none;
 }
 
 .muscle-group-button:hover {
