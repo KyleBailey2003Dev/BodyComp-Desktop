@@ -382,11 +382,14 @@ h2 {
   width: 100%;
   min-height: 40px;
   padding: 10px 12px;
-  border: 1px solid var(--line);
+  border: none;
   border-radius: 8px;
   background: var(--surface-2);
   color: var(--text);
   text-align: left;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .muscle-chip::after {
@@ -400,7 +403,8 @@ h2 {
 
 .muscle-chip:hover,
 .muscle-chip.active {
-  border-color: var(--accent);
+  background-color: #07111a;
+  transform: translateY(-2px);
 }
 
 .muscle-chip.active::after {
@@ -1292,11 +1296,14 @@ textarea {
   border-radius: 7px;
   background: var(--surface-2);
   color: var(--text);
+  background-color: #152b3d;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .muscle-group-button:hover {
-  border-color: var(--accent);
-  background: var(--surface-3);
+  transform: translateY(-2px);
 }
 
 .button-group {
@@ -1311,11 +1318,16 @@ textarea {
 .exercise-toggle-button {
   min-height: 42px;
   padding: 9px 15px;
-  border: 1px solid var(--line);
+  border: none;
   border-radius: 7px;
   background: var(--surface-2);
+  background-color: #152b3d;
   color: var(--text);
   align-items: center;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .exercise-toggle-button[aria-pressed="true"] {
@@ -1327,6 +1339,11 @@ textarea {
 .exercise-toggle-button:hover {
   border-color: var(--accent);
   background: var(--surface-3);
+  transform: translateY(-2px);
+}
+
+dialog {
+  border: none;
 }
 
 dialog#exerciseModal {
